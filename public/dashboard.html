@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Session Recorder — Dashboard</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/rrweb-player@2.0.0-alpha.13/dist/style.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:        #0a0a0f;
+      --surface:   #111118;
+      --surface2:  #1a1a24;
+      --border:    #2a2a3a;
+      --accent:    #7c6cfc;
+      --accent2:   #fc6cc8;
+      --green:     #4cfca2;
+      --text:      #e8e8f0;
+      --muted:     #6666880;
+      --muted2:    #888899;
+      --font-head: 'Syne', sans-serif;
+      --font-mono: 'DM Mono', monospace;
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: var(--font-mono);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* ── Top bar ── */
+    header {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 18px 28px;
+      border-bottom: 1px solid var(--border);
+      background: var(--surface);
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--font-head);
+      font-weight: 800;
+      font-size: 18px;
+      letter-spacing: -0.5px;
+    }
+
+    .logo-dot {
+      width: 10px; height: 10px;
+      background: var(--accent);
+      border-radius: 50%;
+      box-shadow: 0 0 12px var(--accent);
+      animation: pulse 2s ease-in-out infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.5; transform: scale(0.8); }
+    }
+
+    .header-right {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .badge {
+      padding: 4px 10px;
+      border-radius: 20px;
+      font-size: 11px;
+      font-weight: 500;
+      letter-spacing: 0.05em;
+    }
+
+    .badge-live {
+      background: rgba(76, 252, 162, 0.12);
+      color: var(--green);
+      border: 1px solid rgba(76, 252, 162, 0.3);
+    }
+
+    /* ── Layout ── */
+    .app {
+      display: grid;
+      grid-template-columns: 340px 1fr;
+      flex: 1;
+      overflow: hidden;
+      height: calc(100vh - 61px);
+    }
+
+    /* ── Sidebar ── */
+    .sidebar {
+      border-right: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      background: var(--surface);
+    }
+
+    .sidebar-header {
+      padding: 16px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .sidebar-title {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--muted2);
+    }
+
+    /* ── Stats row ── */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+    }
+
+    .stat-card {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      padding: 10px 12px;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+    }
+
+    .stat-value {
+      font-family: var(--font-head);
+      font-size: 22px;
+      font-weight: 700;
+      color: var(--accent);
+    }
+
+    .stat-label {
+      font-size: 10px;
+      color: var(--muted2);
+      text-transform: uppercase;
+      letter-spacing: 0.07em;
+    }
+
+    /* ── Search ── */
+    .search-box {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 8px 12px;
+      transition: border-color 0.2s;
+    }
+
+    .search-box:focus-within {
+      border-color: var(--accent);
+    }
+
+    .search-box input {
+      background: none;
+      border: none;
+      outline: none;
+      color: var(--text);
+      font-family: var(--font-mono);
+      font-size: 12px;
+      flex: 1;
+    }
+
+    .search-box input::placeholder { color: var(--muted2); }
+
+    /* ── Session list ── */
+    .session-list {
+      flex: 1;
+      overflow-y: auto;
+      padding: 8px;
+    }
+
+    .session-list::-webkit-scrollbar { width: 4px; }
+    .session-list::-webkit-scrollbar-track { background: transparent; }
+    .session-list::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
+
+    .session-item {
+      padding: 12px 14px;
+      border-radius: 10px;
+      cursor: pointer;
+      border: 1px solid transparent;
+      transition: all 0.15s;
+      margin-bottom: 4px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .session-item::before {
+      content: '';
+      position: absolute;
+      left: 0; top: 0; bottom: 0;
+      width: 3px;
+      background: var(--accent);
+      opacity: 0;
+      transition: opacity 0.2s;
+    }
+
+    .session-item:hover {
+      background: var(--surface2);
+      border-color: var(--border);
+    }
+
+    .session-item.active {
+      background: rgba(124, 108, 252, 0.1);
+      border-color: rgba(124, 108, 252, 0.3);
+    }
+
+    .session-item.active::before { opacity: 1; }
+
+    .session-id {
+      font-size: 11px;
+      color: var(--accent);
+      font-weight: 500;
+      margin-bottom: 4px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .session-url {
+      font-size: 11px;
+      color: var(--text);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      margin-bottom: 6px;
+    }
+
+    .session-meta {
+      display: flex;
+      gap: 10px;
+      align-items: center;
+    }
+
+    .meta-tag {
+      font-size: 10px;
+      color: var(--muted2);
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .meta-tag svg { width: 10px; height: 10px; }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 200px;
+      color: var(--muted2);
+      font-size: 12px;
+      gap: 8px;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .empty-state svg { width: 32px; height: 32px; opacity: 0.4; }
+
+    /* ── Main content ── */
+    .main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* ── Welcome screen ── */
+    .welcome {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+      text-align: center;
+      padding: 40px;
+    }
+
+    .welcome h2 {
+      font-family: var(--font-head);
+      font-size: 28px;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .welcome p {
+      color: var(--muted2);
+      font-size: 13px;
+      max-width: 380px;
+      line-height: 1.7;
+    }
+
+    .install-box {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 20px 24px;
+      text-align: left;
+      max-width: 520px;
+      width: 100%;
+    }
+
+    .install-title {
+      font-family: var(--font-head);
+      font-size: 13px;
+      font-weight: 700;
+      color: var(--muted2);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+
+    .install-steps { display: flex; flex-direction: column; gap: 10px; }
+
+    .install-step {
+      display: flex;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .step-num {
+      width: 22px; height: 22px;
+      background: rgba(124, 108, 252, 0.2);
+      border: 1px solid var(--accent);
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 11px; font-weight: 700; color: var(--accent);
+      flex-shrink: 0;
+    }
+
+    .step-text { font-size: 12px; color: var(--muted2); line-height: 1.5; }
+    .step-text strong { color: var(--text); }
+
+    /* ── Player area ── */
+    .player-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .player-toolbar {
+      padding: 14px 20px;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: var(--surface);
+      flex-wrap: wrap;
+    }
+
+    .player-session-info {
+      flex: 1;
+      min-width: 0;
+    }
+
+    .player-session-id {
+      font-size: 12px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+
+    .player-session-url {
+      font-size: 11px;
+      color: var(--muted2);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .toolbar-tags {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .toolbar-tag {
+      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 3px 10px;
+      font-size: 11px;
+      color: var(--muted2);
+    }
+
+    .btn-delete {
+      background: rgba(252, 108, 108, 0.12);
+      border: 1px solid rgba(252, 108, 108, 0.3);
+      border-radius: 8px;
+      padding: 6px 14px;
+      font-size: 11px;
+      color: #fc6c6c;
+      cursor: pointer;
+      font-family: var(--font-mono);
+      transition: all 0.2s;
+    }
+
+    .btn-delete:hover {
+      background: rgba(252, 108, 108, 0.2);
+    }
+
+    .player-container {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--bg);
+      overflow: hidden;
+      position: relative;
+    }
+
+    #rrweb-player {
+      width: 100%;
+      height: 100%;
+    }
+
+    .loading-overlay {
+      position: absolute;
+      inset: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      background: var(--bg);
+      z-index: 10;
+    }
+
+    .spinner {
+      width: 36px; height: 36px;
+      border: 3px solid var(--border);
+      border-top-color: var(--accent);
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .loading-text { font-size: 12px; color: var(--muted2); }
+
+    .error-banner {
+      background: rgba(252, 108, 108, 0.1);
+      border: 1px solid rgba(252, 108, 108, 0.3);
+      border-radius: 8px;
+      padding: 10px 16px;
+      font-size: 12px;
+      color: #fc6c6c;
+      margin: 12px 20px;
+    }
+
+    /* ── Responsive ── */
+    @media (max-width: 768px) {
+      .app { grid-template-columns: 1fr; }
+      .sidebar { height: 300px; }
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="logo">
+    <div class="logo-dot"></div>
+    SessionRec
+  </div>
+  <span class="badge badge-live">● LIVE</span>
+  <div class="header-right">
+    <span id="header-count" style="font-size:12px; color: var(--muted2);">Loading...</span>
+  </div>
+</header>
+
+<div class="app">
+
+  <!-- ── Sidebar ── -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-title">Sessions</div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-value" id="stat-total">—</div>
+          <div class="stat-label">Total</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-today" style="color: var(--green)">—</div>
+          <div class="stat-label">Today</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value" id="stat-avg" style="color: var(--accent2)">—</div>
+          <div class="stat-label">Avg(s)</div>
+        </div>
+      </div>
+
+      <div class="search-box">
+        <svg width="12" height="12" viewBox="0 0 16 16" fill="none">
+          <circle cx="6.5" cy="6.5" r="5.5" stroke="#888899" stroke-width="1.5"/>
+          <path d="M11 11l3.5 3.5" stroke="#888899" stroke-width="1.5" stroke-linecap="round"/>
+        </svg>
+        <input type="text" placeholder="Search sessions..." id="search-input" />
+      </div>
+    </div>
+
+    <div class="session-list" id="session-list">
+      <div class="empty-state">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+          <circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/>
+        </svg>
+        <span>Loading sessions...</span>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ── Main ── -->
+  <main class="main" id="main-area">
+    <div class="welcome" id="welcome-screen">
+      <h2>Session Recorder</h2>
+      <p>Select a session from the sidebar to replay it, or install the tracker on your Shopify store to start recording.</p>
+
+      <div class="install-box">
+        <div class="install-title">Quick Install</div>
+        <div class="install-steps">
+          <div class="install-step">
+            <div class="step-num">1</div>
+            <div class="step-text">In Shopify Admin go to <strong>Online Store → Themes → Edit Code</strong></div>
+          </div>
+          <div class="install-step">
+            <div class="step-num">2</div>
+            <div class="step-text">Open <strong>Layout → theme.liquid</strong></div>
+          </div>
+          <div class="install-step">
+            <div class="step-num">3</div>
+            <div class="step-text">Paste the contents of <strong>shopify-snippet.js</strong> just before <code>&lt;/head&gt;</code></div>
+          </div>
+          <div class="install-step">
+            <div class="step-num">4</div>
+            <div class="step-text">Replace <strong>YOUR_BACKEND_URL</strong> with this server's public URL</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="player-area" id="player-area" style="display:none;">
+      <div class="player-toolbar">
+        <div class="player-session-info">
+          <div class="player-session-id" id="player-sid">—</div>
+          <div class="player-session-url" id="player-url">—</div>
+        </div>
+        <div class="toolbar-tags">
+          <span class="toolbar-tag" id="tag-events">— events</span>
+          <span class="toolbar-tag" id="tag-duration">—s</span>
+          <span class="toolbar-tag" id="tag-screen">—</span>
+        </div>
+        <button class="btn-delete" id="btn-delete">Delete</button>
+      </div>
+
+      <div class="player-container">
+        <div class="loading-overlay" id="loading-overlay">
+          <div class="spinner"></div>
+          <div class="loading-text">Loading session...</div>
+        </div>
+        <div id="rrweb-player"></div>
+      </div>
+    </div>
+  </main>
+
+</div>
+
+<!-- rrweb player -->
+<script src="https://cdn.jsdelivr.net/npm/rrweb@2.0.0-alpha.13/dist/rrweb.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/rrweb-player@2.0.0-alpha.13/dist/index.js"></script>
+
+<script>
+  let sessions = [];
+  let currentPlayer = null;
+  let currentSessionId = null;
+  let searchTerm = '';
+
+  // ── Fetch stats ──────────────────────────────────────────────
+  async function fetchStats() {
+    try {
+      const res = await fetch('/api/stats');
+      const data = await res.json();
+      document.getElementById('stat-total').textContent = data.total;
+      document.getElementById('stat-today').textContent = data.today;
+      document.getElementById('stat-avg').textContent = data.avgDuration;
+      document.getElementById('header-count').textContent = `${data.total} sessions recorded`;
+    } catch (e) {
+      document.getElementById('header-count').textContent = 'Server offline';
+    }
+  }
+
+  // ── Fetch session list ───────────────────────────────────────
+  async function fetchSessions() {
+    try {
+      const res = await fetch('/api/sessions');
+      const data = await res.json();
+      sessions = data.sessions || [];
+      renderList();
+    } catch (e) {
+      document.getElementById('session-list').innerHTML = `
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <circle cx="12" cy="12" r="10"/>
+            <path d="M12 8v5M12 16v.5"/>
+          </svg>
+          <span>Cannot connect to server.<br/>Make sure it's running.</span>
+        </div>`;
+    }
+  }
+
+  // ── Render session list ──────────────────────────────────────
+  function renderList() {
+    const list = document.getElementById('session-list');
+    const filtered = sessions.filter(s =>
+      !searchTerm ||
+      s.id.includes(searchTerm) ||
+      (s.page_url || '').toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    if (filtered.length === 0) {
+      list.innerHTML = `
+        <div class="empty-state">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+            <path d="M15 10l-4 4l6 6l4-16l-18 7l4 2l2 6l3-4"/>
+          </svg>
+          <span>No sessions yet.<br/>Install the tracker on your Shopify store.</span>
+        </div>`;
+      return;
+    }
+
+    list.innerHTML = filtered.map(s => `
+      <div class="session-item ${s.id === currentSessionId ? 'active' : ''}"
+           onclick="loadSession('${s.id}')">
+        <div class="session-id">${s.id}</div>
+        <div class="session-url">${formatUrl(s.page_url)}</div>
+        <div class="session-meta">
+          <span class="meta-tag">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+              <circle cx="8" cy="8" r="6"/>
+              <path d="M8 5v3.5l2.5 1.5"/>
+            </svg>
+            ${s.duration || 0}s
+          </span>
+          <span class="meta-tag">
+            <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5">
+              <rect x="2" y="2" width="12" height="12" rx="1"/>
+              <path d="M6 8l2 2 4-4"/>
+            </svg>
+            ${s.event_count || 0} events
+          </span>
+          <span class="meta-tag">${formatTime(s.last_updated)}</span>
+        </div>
+      </div>
+    `).join('');
+  }
+
+  // ── Load a session for playback ──────────────────────────────
+  async function loadSession(id) {
+    currentSessionId = id;
+    renderList();
+
+    document.getElementById('welcome-screen').style.display = 'none';
+    document.getElementById('player-area').style.display = 'flex';
+    document.getElementById('loading-overlay').style.display = 'flex';
+
+    // Destroy previous player
+    if (currentPlayer) {
+      try { currentPlayer.$destroy(); } catch(e) {}
+      currentPlayer = null;
+      document.getElementById('rrweb-player').innerHTML = '';
+    }
+
+    try {
+      const res = await fetch(`/api/sessions/${id}`);
+      if (!res.ok) throw new Error('Session not found');
+      const session = await res.json();
+
+      // Update toolbar
+      document.getElementById('player-sid').textContent = session.id;
+      document.getElementById('player-url').textContent = session.page_url || 'Unknown URL';
+      document.getElementById('tag-events').textContent = `${session.event_count || 0} events`;
+      document.getElementById('tag-duration').textContent = `${session.duration || 0}s`;
+      document.getElementById('tag-screen').textContent =
+        session.screen_width ? `${session.screen_width}×${session.screen_height}` : 'Unknown screen';
+
+      if (!session.events || session.events.length < 2) {
+        document.getElementById('loading-overlay').innerHTML = `
+          <div style="text-align:center; color: var(--muted2); font-size:13px;">
+            <div style="font-size:32px; margin-bottom:8px;">🎬</div>
+            Not enough events to replay yet.<br/>Check back once the user has interacted more.
+          </div>`;
+        return;
+      }
+
+      // Hide overlay and init player
+      document.getElementById('loading-overlay').style.display = 'none';
+
+      const container = document.getElementById('rrweb-player');
+      const rect = container.getBoundingClientRect();
+
+      currentPlayer = new rrwebPlayer({
+        target: container,
+        props: {
+          events: session.events,
+          width: Math.floor(rect.width) - 40,
+          height: Math.floor(rect.height) - 40,
+          autoPlay: true,
+          showController: true,
+          speedOption: [1, 2, 4, 8],
+        }
+      });
+
+    } catch (err) {
+      document.getElementById('loading-overlay').innerHTML = `
+        <div style="color:#fc6c6c; font-size:13px; text-align:center;">
+          Failed to load session.<br/><small>${err.message}</small>
+        </div>`;
+    }
+  }
+
+  // ── Delete session ───────────────────────────────────────────
+  document.getElementById('btn-delete').addEventListener('click', async () => {
+    if (!currentSessionId) return;
+    if (!confirm('Delete this session? This cannot be undone.')) return;
+
+    await fetch(`/api/sessions/${currentSessionId}`, { method: 'DELETE' });
+    currentSessionId = null;
+    document.getElementById('player-area').style.display = 'none';
+    document.getElementById('welcome-screen').style.display = 'flex';
+    fetchSessions();
+    fetchStats();
+  });
+
+  // ── Search ───────────────────────────────────────────────────
+  document.getElementById('search-input').addEventListener('input', e => {
+    searchTerm = e.target.value;
+    renderList();
+  });
+
+  // ── Helpers ──────────────────────────────────────────────────
+  function formatUrl(url) {
+    if (!url) return 'Unknown page';
+    try { return new URL(url).pathname || '/'; } catch { return url; }
+  }
+
+  function formatTime(ts) {
+    if (!ts) return '';
+    const d = new Date(ts);
+    return d.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  }
+
+  // ── Init ─────────────────────────────────────────────────────
+  fetchStats();
+  fetchSessions();
+
+  // Auto-refresh every 15 seconds
+  setInterval(() => {
+    fetchStats();
+    fetchSessions();
+  }, 15000);
+</script>
+</body>
+</html>
