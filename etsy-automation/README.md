@@ -40,9 +40,16 @@ npm run create-draft -- path/to/listing.json
   "who_made": "i_did",
   "when_made": "2020_2026",
   "taxonomy_id": 1234,
-  "images": ["path/to/mockup1.jpg", "path/to/mockup2.jpg"]
+  "images": ["path/to/mockup1.jpg", "path/to/mockup2.jpg"],
+  "sizes": [
+    { "size": "5x7", "price": 30.80, "quantity": 10 },
+    { "size": "8x10", "price": 49.00, "quantity": 10 }
+  ]
 }
 ```
+
+`sizes` is optional — omit it for a single-price listing with no variations. When present,
+each entry becomes a "Size" option on the listing with its own price via Etsy's inventory API.
 
 Listing is always created with `state: draft` — nothing publishes automatically.
 

@@ -45,4 +45,29 @@ async function uploadListingImage(shopId, listingId, imagePath, rank) {
   return data;
 }
 
-module.exports = { createDraftListing, uploadListingImage };
+async function updateListingInventory(shopId, listingId, sizeOfferings) {
+  const products = sizeOfferings.map(({ size, price, quantity }) => ({
+    sku: size,
+    property_values: [
+      {
+        property_name: 'Size',
+        values: [size]
+      }
+    ],
+    offerings: [
+      {
+        price,
+        quantity,
+        is_enabled: true
+      }
+    ]
+  }));
+
+  return authedFetch(`${API_BASE}/shops/${shopId}/listings/${listingId}/inventory`, {
+    method: 'PUT',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ products })
+  });
+}
+
+module.exports = { createDraftListing, uploadListingImage, updateListingInventory };
