@@ -1,33 +1,54 @@
-# Etsy Draft Listing Tool
+# Etsy Automation
 
-One-time setup, then the day-to-day workflow happens in chat with Claude — no dashboard, no scripts to run yourself.
+OAuth connection + draft listing creation for your Etsy shop via Open API v3.
 
-## One-time setup
+## Setup
 
-1. `cp .env.example .env` and fill in `ETSY_API_KEY` / `ETSY_SHARED_SECRET` from your Etsy developer app
-2. `npm install`
-3. `npm run auth` — opens a link, you log in as your shop and approve access once. Saves your shop ID and tokens automatically.
+```bash
+cd etsy-automation
+npm install
+cp .env.example .env
+```
 
-That's it. Tokens auto-refresh after this — you never repeat step 3 unless you revoke access.
+Fill in `.env` with the Keystring and Shared Secret from your Etsy developer app page.
 
-## Day-to-day workflow
+## Connect your shop (one-time)
 
-You don't touch the CLI directly. In chat:
+```bash
+npm run auth
+```
 
-1. Send Claude a listing URL you think is a winner
-2. Claude generates an altered design (Higgsfield) and a mockup, shows them to you
-3. You approve or ask for changes
-4. Claude fills in `listing.example.json`-shaped data and runs `npm run create-draft` behind the scenes
-5. You get a link to the **draft** listing in Etsy — review and publish it yourself whenever you're ready
+This must be run on the machine whose browser you'll use to approve access — the OAuth
+redirect goes to `http://localhost:3001/...`, which only resolves on that same machine.
+It opens an authorization URL, waits for the redirect, then saves tokens to
+`.tokens.json` and writes `ETSY_SHOP_ID` into `.env` automatically.
 
-Nothing publishes automatically. Every listing sits as a draft until you personally hit publish in Etsy.
+## Create a draft listing
 
-## Files
+```bash
+npm run create-draft -- path/to/listing.json
+```
 
-| File | Purpose |
-|---|---|
-| `src/oauth.js` | One-time OAuth authorization (`npm run auth`) |
-| `src/tokenStore.js` | Reads/refreshes saved tokens automatically |
-| `src/etsyClient.js` | Create draft listings, upload images |
-| `src/createDraftListing.js` | CLI entry point, takes a listing JSON file |
-| `listing.example.json` | Shape of the JSON `createDraftListing.js` expects |
+`listing.json` shape:
+
+```json
+{
+  "title": "...",
+  "description": "...",
+  "price": 24.99,
+  "quantity": 10,
+  "who_made": "i_did",
+  "when_made": "2020_2026",
+  "taxonomy_id": 1234,
+  "images": ["path/to/mockup1.jpg", "path/to/mockup2.jpg"]
+}
+```
+
+Listing is always created with `state: draft` — nothing publishes automatically.
+
+## Photoshop mockups
+
+See `photoshop/mockup_automation.jsx`. One-time setup: put it in its own folder
+alongside a `mockup.psd` (containing a Smart Object named to match `SO_NAME_MATCH`
+in the script). It auto-creates `input/` and `output/` next to itself and runs
+dialog-free once `mockup.psd` is present.

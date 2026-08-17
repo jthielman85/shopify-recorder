@@ -1,29 +1,37 @@
+require('dotenv').config({ path: require('path').join(__dirname, '..', '.env') });
 const fs = require('fs');
 const path = require('path');
 const { createDraftListing, uploadListingImage } = require('./etsyClient');
 
-const inputPath = process.argv[2];
-if (!inputPath) {
+const { ETSY_SHOP_ID } = process.env;
+const listingJsonPath = process.argv[2];
+
+if (!ETSY_SHOP_ID) {
+  console.error('ETSY_SHOP_ID is not set in .env — run `npm run auth` first.');
+  process.exit(1);
+}
+if (!listingJsonPath) {
   console.error('Usage: npm run create-draft -- path/to/listing.json');
-  console.error('See listing.example.json for the expected shape.');
+  console.error('listing.json shape: { title, description, price, quantity, who_made, when_made, taxonomy_id, images: ["path/to/img.png", ...] }');
   process.exit(1);
 }
 
-const listing = JSON.parse(fs.readFileSync(inputPath, 'utf8'));
-const { images = [], ...listingFields } = listing;
+async function main() {
+  const listing = JSON.parse(fs.readFileSync(path.resolve(listingJsonPath), 'utf8'));
+  const { images = [], ...listingFields } = listing;
 
-(async () => {
-  const created = await createDraftListing(listingFields);
-  console.log(`Draft created: listing_id ${created.listing_id} (state: ${created.state})`);
+  const created = await createDraftListing(ETSY_SHOP_ID, listingFields);
+  console.log(`Draft listing created: listing_id ${created.listing_id}`);
 
   for (let i = 0; i < images.length; i++) {
-    const imagePath = path.resolve(path.dirname(inputPath), images[i]);
-    await uploadListingImage(created.listing_id, imagePath, i + 1);
-    console.log(`  uploaded image ${i + 1}/${images.length}`);
+    await uploadListingImage(ETSY_SHOP_ID, created.listing_id, path.resolve(images[i]), i + 1);
+    console.log(`  uploaded image ${i + 1}/${images.length}: ${images[i]}`);
   }
 
-  console.log(`\nReview it here: https://www.etsy.com/your/shops/me/listing-editor/edit/${created.listing_id}`);
-})().catch(err => {
+  console.log(`\nDone. Review it in Etsy Shop Manager under Draft listings.`);
+}
+
+main().catch(err => {
   console.error(err.message);
   process.exit(1);
 });
