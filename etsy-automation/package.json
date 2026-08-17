@@ -1,0 +1,14 @@
+{
+  "name": "etsy-automation",
+  "version": "0.1.0",
+  "description": "OAuth + draft listing pipeline for Etsy Open API v3",
+  "private": true,
+  "type": "commonjs",
+  "scripts": {
+    "auth": "node src/oauth.js",
+    "create-draft": "node src/createDraftListing.js"
+  },
+  "dependencies": {
+    "dotenv": "^16.4.5"
+  }
+}
