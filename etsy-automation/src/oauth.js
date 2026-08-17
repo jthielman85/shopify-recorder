@@ -9,10 +9,10 @@ const TOKENS_PATH = path.join(__dirname, '..', '.tokens.json');
 const TOKEN_URL = 'https://api.etsy.com/v3/public/oauth/token';
 const SCOPES = ['listings_r', 'listings_w', 'shops_r'];
 
-const { ETSY_API_KEY, ETSY_REDIRECT_URI } = process.env;
+const { ETSY_API_KEY, ETSY_SHARED_SECRET, ETSY_REDIRECT_URI } = process.env;
 
-if (!ETSY_API_KEY || !ETSY_REDIRECT_URI) {
-  console.error('Missing ETSY_API_KEY or ETSY_REDIRECT_URI. Copy .env.example to .env and fill it in first.');
+if (!ETSY_API_KEY || !ETSY_SHARED_SECRET || !ETSY_REDIRECT_URI) {
+  console.error('Missing ETSY_API_KEY, ETSY_SHARED_SECRET, or ETSY_REDIRECT_URI. Copy .env.example to .env and fill it in first.');
   process.exit(1);
 }
 
@@ -55,7 +55,7 @@ async function exchangeCode(code) {
 
 async function fetchShopId(accessToken, userId) {
   const res = await fetch(`https://api.etsy.com/v3/application/users/${userId}/shops`, {
-    headers: { 'x-api-key': ETSY_API_KEY, Authorization: `Bearer ${accessToken}` }
+    headers: { 'x-api-key': `${ETSY_API_KEY}:${ETSY_SHARED_SECRET}`, Authorization: `Bearer ${accessToken}` }
   });
   const data = await res.json();
   if (!res.ok) throw new Error(`Shop lookup failed: ${JSON.stringify(data)}`);
