@@ -46,11 +46,15 @@ async function uploadListingImage(shopId, listingId, imagePath, rank) {
   return data;
 }
 
+// property_id 513 is Etsy's "Custom1" variation slot (this taxonomy has no built-in Size
+// property). readiness_state_id is this shop's "1-3 days" made-to-order processing profile,
+// from GET /shops/{shop_id}/readiness-state-definitions.
 async function updateListingInventory(shopId, listingId, sizeOfferings) {
   const products = sizeOfferings.map(({ size, price, quantity }) => ({
     sku: size,
     property_values: [
       {
+        property_id: 513,
         property_name: 'Size',
         values: [size]
       }
@@ -59,15 +63,21 @@ async function updateListingInventory(shopId, listingId, sizeOfferings) {
       {
         price,
         quantity,
-        is_enabled: true
+        is_enabled: true,
+        readiness_state_id: 1492230079765
       }
     ]
   }));
 
-  return authedFetch(`${API_BASE}/shops/${shopId}/listings/${listingId}/inventory`, {
+  return authedFetch(`${API_BASE}/listings/${listingId}/inventory`, {
     method: 'PUT',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ products })
+    body: JSON.stringify({
+      products,
+      price_on_property: [513],
+      quantity_on_property: [513],
+      sku_on_property: [513]
+    })
   });
 }
 
