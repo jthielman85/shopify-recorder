@@ -1,6 +1,11 @@
 // ============================================================
-//  MOCKUP BATCH AUTOMATION  v1.9
+//  MOCKUP BATCH AUTOMATION  v2.0
 //  Photoshop ExtendScript (.jsx)
+//
+//  FIX in v2.0:
+//  Each source design is moved into input/complete/ right after
+//  it's successfully processed, so re-running the script never
+//  redoes designs you already have mockups for.
 //
 //  FIX in v1.9:
 //  Auto-detects input/, output/, and mockup.psd sitting next to
@@ -16,7 +21,8 @@
 //  EVERY RUN AFTER THAT:
 //  Drop design PNGs into input/, then run the script (drag it onto
 //  the Photoshop app icon, or File > Scripts > Browse...). No
-//  dialogs, no clicking through folder pickers.
+//  dialogs, no clicking through folder pickers. Processed designs
+//  move themselves to input/complete/ automatically.
 //
 //  OUTPUT STRUCTURE:
 //  output_folder/
@@ -248,6 +254,12 @@ for (var imgIndex = 0; imgIndex < imageFiles.length; imgIndex++) {
         }
 
         mockupDoc.close(SaveOptions.DONOTSAVECHANGES);
+
+        // ── Move the source design out of input/ so re-runs don't redo it ─
+        var completeFolder = new Folder(inputFolder + "/complete");
+        if (!completeFolder.exists) completeFolder.create();
+        currentImageFile.copy(completeFolder + "/" + imageName);
+        currentImageFile.remove();
 
     } catch (e) {
         errorLog.push(imageBaseName + " — ERROR: " + e.message + " (line " + e.line + ")");
