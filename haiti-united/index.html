@@ -1,0 +1,305 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Haiti United FC — Ansanm Nou Pi Fò</title>
+<meta name="description" content="Haiti United FC — official home of the club. Fixtures, results, squad, news, tickets and membership.">
+<meta name="theme-color" content="#050816">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800;900&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="cursor" aria-hidden="true"><span class="cursor__label"></span></div>
+<div class="grain" aria-hidden="true"></div>
+
+<!-- ============ NAV ============ -->
+<header class="nav" id="nav">
+  <a href="#top" class="nav__logo" aria-label="Haiti United FC home">
+    <svg viewBox="0 0 64 64" width="38" height="38" aria-hidden="true">
+      <path d="M32 3 56 11v21c0 15-10 25-24 29C18 57 8 47 8 32V11z" fill="#d21034"/>
+      <path d="M32 3 56 11v21H8V11z" fill="#00209f"/>
+      <circle cx="32" cy="32" r="10" fill="#fff"/>
+      <path d="m32 26 5 3.600-1.900 5.800h-6.200L27 29.600z" fill="#050816"/>
+    </svg>
+    <span>HAITI<b>UNITED</b></span>
+  </a>
+  <nav class="nav__links" aria-label="Primary">
+    <a href="#match" data-cursor="Live">Matches</a>
+    <a href="#story">The Club</a>
+    <a href="#squad">Squad</a>
+    <a href="#news">News</a>
+    <a href="#join">Tickets</a>
+  </nav>
+  <a href="#join" class="btn btn--red magnetic nav__cta"><span>Get Tickets</span></a>
+  <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
+</header>
+
+<div class="menu" id="menu" aria-hidden="true">
+  <a href="#match"><em>01</em>Matches</a>
+  <a href="#story"><em>02</em>The Club</a>
+  <a href="#squad"><em>03</em>Squad</a>
+  <a href="#news"><em>04</em>News</a>
+  <a href="#join"><em>05</em>Tickets</a>
+</div>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero__bg">
+    <div class="hero__blob hero__blob--blue"></div>
+    <div class="hero__blob hero__blob--red"></div>
+    <div class="hero__spot" id="spot"></div>
+    <div class="hero__lines"></div>
+  </div>
+
+  <div class="hero__no" data-depth="0.35" aria-hidden="true">10</div>
+
+  <div class="hero__ball" data-depth="0.8" aria-hidden="true">
+    <svg viewBox="0 0 200 200">
+      <defs><radialGradient id="bg1" cx="35%" cy="30%"><stop offset="0" stop-color="#fff"/><stop offset="1" stop-color="#b9c3e6"/></radialGradient></defs>
+      <circle cx="100" cy="100" r="96" fill="url(#bg1)"/>
+      <g fill="#050816">
+        <path d="m100 62 30 22-11 35H81L70 84z"/>
+        <path d="m100 62V30l-22 8zM130 84l31-8 8 24-20 20zM119 119l12 33-22 14-9-30zM81 119l-12 33 22 14 9-30zM70 84 39 76l-8 24 20 20z" opacity=".9"/>
+      </g>
+    </svg>
+  </div>
+
+  <div class="hero__inner">
+    <p class="eyebrow reveal-line"><span class="dot"></span> Season 2026/27 · Matchday Live</p>
+    <h1 class="hero__title" id="heroTitle" aria-label="Haiti United">
+      <span class="row" data-split>HAITI</span>
+      <span class="row row--outline" data-split>UNITED</span>
+    </h1>
+    <p class="hero__sub reveal-line">Ansanm nou pi fò. <span>Together we are stronger.</span></p>
+    <div class="hero__ctas reveal-line">
+      <a href="#join" class="btn btn--red magnetic" data-cursor="Go"><span>Get Tickets</span></a>
+      <a href="#match" class="btn btn--ghost magnetic"><span>Match Centre</span></a>
+    </div>
+  </div>
+
+  <aside class="next" id="next" aria-label="Next match">
+    <div class="next__head"><span class="pill pill--live">Next Match</span><span id="nextComp">League</span></div>
+    <div class="next__teams">
+      <div class="crest crest--us">HU</div>
+      <span class="vs">VS</span>
+      <div class="crest crest--them" id="nextCrest">??</div>
+    </div>
+    <h3 id="nextName">—</h3>
+    <p class="next__meta" id="nextMeta">—</p>
+    <div class="count" id="count" role="timer">
+      <div><b id="cD">00</b><small>Days</small></div>
+      <div><b id="cH">00</b><small>Hrs</small></div>
+      <div><b id="cM">00</b><small>Min</small></div>
+      <div><b id="cS">00</b><small>Sec</small></div>
+    </div>
+  </aside>
+
+  <div class="scrollcue" aria-hidden="true"><span></span>Scroll</div>
+</section>
+
+<!-- ============ MARQUEE ============ -->
+<section class="ticker" aria-label="Latest results">
+  <div class="ticker__track" id="ticker1"></div>
+</section>
+
+<!-- ============ MATCH CENTRE ============ -->
+<section class="section match" id="match">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="dot"></span> Match Centre</p>
+      <h2 class="big" data-split-words>Every minute. <br>Every goal.</h2>
+    </div>
+
+    <div class="match__grid">
+      <div class="panel panel--fix">
+        <div class="panel__top"><h3>Fixtures &amp; Results</h3>
+          <div class="tabs" role="tablist">
+            <button class="tab is-on" data-tab="fixtures" role="tab">Fixtures</button>
+            <button class="tab" data-tab="results" role="tab">Results</button>
+          </div>
+        </div>
+        <ul class="fixlist" id="fixlist"></ul>
+      </div>
+
+      <div class="panel panel--table">
+        <div class="panel__top"><h3>League Table</h3><span class="pill">Top 6</span></div>
+        <table class="table" id="table">
+          <thead><tr><th>#</th><th>Club</th><th>P</th><th>GD</th><th>Pts</th></tr></thead>
+          <tbody></tbody>
+        </table>
+        <div class="form">
+          <small>Our form</small>
+          <div class="form__pills" id="form"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ PINNED STORY ============ -->
+<section class="story" id="story">
+  <div class="story__pin">
+    <div class="story__visual">
+      <div class="story__ring story__ring--1"></div>
+      <div class="story__ring story__ring--2"></div>
+      <div class="story__num" id="storyNum">1</div>
+      <div class="story__label" id="storyLabel">Roots</div>
+      <div class="story__bar"><i id="storyBar"></i></div>
+    </div>
+    <div class="story__text">
+      <p class="eyebrow"><span class="dot"></span> The Club</p>
+      <div class="chapter is-on" data-num="1" data-label="Roots">
+        <h2>Born from the <span class="hl">diaspora.</span></h2>
+        <p>Haiti United started with a ball, a patch of grass and a community that refused to be divided by distance. Replace this with the real founding story.</p>
+      </div>
+      <div class="chapter" data-num="2" data-label="Identity">
+        <h2>Blue. Red. <span class="hl">One heartbeat.</span></h2>
+        <p>The colors of the flag, the rhythm of rara, the pride of kreyòl — everything we wear on the pitch says where we come from.</p>
+      </div>
+      <div class="chapter" data-num="3" data-label="Rise">
+        <h2>From local pitch to <span class="hl">big stage.</span></h2>
+        <p>Every season we climb. Add your honors, league history and milestones here — this chapter is built to be edited.</p>
+      </div>
+      <div class="chapter" data-num="4" data-label="Future">
+        <h2>The next generation <span class="hl">starts here.</span></h2>
+        <p>Youth academy, community programs and a pathway for the next wave of Haitian talent. Join us.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ STATS ============ -->
+<section class="stats">
+  <div class="wrap stats__grid">
+    <div class="stat"><b data-count="38">0</b><span>Goals this season</span></div>
+    <div class="stat"><b data-count="12">0</b><span>Wins</span></div>
+    <div class="stat"><b data-count="71" data-suffix="%">0</b><span>Possession avg.</span></div>
+    <div class="stat"><b data-count="5200">0</b><span>Supporters</span></div>
+  </div>
+</section>
+
+<!-- ============ MASK REVEAL ============ -->
+<section class="mask" id="mask">
+  <div class="mask__stage">
+    <div class="mask__under">
+      <h2>ANSANM<br>NOU PI FÒ</h2>
+    </div>
+    <div class="mask__over" id="maskOver">
+      <div class="mask__inner">
+        <p class="eyebrow"><span class="dot"></span> Our Motto</p>
+        <h2>TOGETHER<br>WE ARE<br>STRONGER</h2>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SQUAD (horizontal) ============ -->
+<section class="squad" id="squad">
+  <div class="squad__pin">
+    <div class="squad__head">
+      <div>
+        <p class="eyebrow"><span class="dot"></span> First Team</p>
+        <h2 class="big">The Squad</h2>
+      </div>
+      <p class="hint">Keep scrolling <span>→</span></p>
+    </div>
+    <div class="squad__track" id="squadTrack"></div>
+  </div>
+</section>
+
+<!-- ============ TOP SCORERS ============ -->
+<section class="section scorers">
+  <div class="wrap scorers__grid">
+    <div>
+      <p class="eyebrow"><span class="dot"></span> Season Leaders</p>
+      <h2 class="big" data-split-words>Golden <br>Boot race</h2>
+      <p class="lead">Live stat bars fill as you scroll. Hook these to your real stats feed later.</p>
+    </div>
+    <div class="bars" id="bars"></div>
+  </div>
+</section>
+
+<!-- ============ NEWS ============ -->
+<section class="section news" id="news">
+  <div class="wrap">
+    <div class="sec-head sec-head--row">
+      <div>
+        <p class="eyebrow"><span class="dot"></span> Latest</p>
+        <h2 class="big" data-split-words>Club News</h2>
+      </div>
+      <a href="#" class="link" data-cursor="Read">All news →</a>
+    </div>
+    <div class="news__grid" id="newsGrid"></div>
+  </div>
+</section>
+
+<!-- ============ JOIN / TICKETS ============ -->
+<section class="section join" id="join">
+  <div class="wrap">
+    <div class="sec-head">
+      <p class="eyebrow"><span class="dot"></span> Be part of it</p>
+      <h2 class="big" data-split-words>Tickets &amp; <br>Membership</h2>
+    </div>
+    <div class="tiers">
+      <article class="tier tilt">
+        <h3>Matchday</h3><p class="price">$15<small>/game</small></p>
+        <ul><li>Single match entry</li><li>Digital ticket</li><li>Fan zone access</li></ul>
+        <button class="btn btn--ghost cart magnetic"><span class="cart__t">Add to Cart</span><svg class="cart__ck" viewBox="0 0 24 24"><path d="M5 12.500 10 17.500 19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </article>
+      <article class="tier tier--hot tilt">
+        <span class="ribbon">Most Popular</span>
+        <h3>Season Pass</h3><p class="price">$120<small>/season</small></p>
+        <ul><li>All home matches</li><li>Priority entry</li><li>Member scarf</li><li>10% off the shop</li></ul>
+        <button class="btn btn--red cart magnetic"><span class="cart__t">Add to Cart</span><svg class="cart__ck" viewBox="0 0 24 24"><path d="M5 12.500 10 17.500 19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </article>
+      <article class="tier tilt">
+        <h3>Supporter</h3><p class="price">$40<small>/year</small></p>
+        <ul><li>Digital membership</li><li>Member-only news</li><li>Vote in fan polls</li></ul>
+        <button class="btn btn--ghost cart magnetic"><span class="cart__t">Add to Cart</span><svg class="cart__ck" viewBox="0 0 24 24"><path d="M5 12.500 10 17.500 19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      </article>
+    </div>
+
+    <div class="poll" id="poll">
+      <h3>Fan vote · Man of the Match</h3>
+      <div class="poll__opts" id="pollOpts"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SPONSORS ============ -->
+<section class="sponsors" aria-label="Partners">
+  <p class="eyebrow center">Proud Partners</p>
+  <div class="ticker__track ticker__track--slow" id="ticker2"></div>
+</section>
+
+</main>
+
+<!-- ============ FOOTER ============ -->
+<footer class="footer">
+  <div class="footer__giant" aria-hidden="true">HAITI UNITED</div>
+  <div class="wrap footer__grid">
+    <div>
+      <h4>Stay in the game</h4>
+      <form class="news-form" onsubmit="return false">
+        <input type="email" placeholder="Your email" aria-label="Email">
+        <button class="btn btn--red magnetic"><span>Join</span></button>
+      </form>
+    </div>
+    <div><h4>Club</h4><a href="#story">About</a><a href="#squad">Squad</a><a href="#news">News</a></div>
+    <div><h4>Fans</h4><a href="#join">Tickets</a><a href="#join">Membership</a><a href="#">Shop</a></div>
+    <div><h4>Follow</h4><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">YouTube</a><a href="#">TikTok</a></div>
+  </div>
+  <p class="footer__legal">© 2026 Haiti United FC · Ansanm nou pi fò</p>
+</footer>
+
+<script src="vendor/gsap.min.js"></script>
+<script src="vendor/ScrollTrigger.min.js"></script>
+<script src="data.js"></script>
+<script src="main.js"></script>
+</body>
+</html>
