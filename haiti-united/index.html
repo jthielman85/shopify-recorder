@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Haiti United FC — Ansanm Nou Pi Fò</title>
-<meta name="description" content="Haiti United FC — official home of the club. Fixtures, results, squad, news, tickets and membership.">
+<title>Haiti United FC — Professional Soccer in New York</title>
+<meta name="description" content="Haiti United FC — a professional soccer club in New York building community, honoring Haitian culture and uniting families.">
 <meta name="theme-color" content="#050816">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -18,31 +18,34 @@
 <!-- ============ NAV ============ -->
 <header class="nav" id="nav">
   <a href="#top" class="nav__logo" aria-label="Haiti United FC home">
-    <svg viewBox="0 0 64 64" width="38" height="38" aria-hidden="true">
-      <path d="M32 3 56 11v21c0 15-10 25-24 29C18 57 8 47 8 32V11z" fill="#d21034"/>
-      <path d="M32 3 56 11v21H8V11z" fill="#00209f"/>
-      <circle cx="32" cy="32" r="10" fill="#fff"/>
-      <path d="m32 26 5 3.600-1.900 5.800h-6.200L27 29.600z" fill="#050816"/>
+    <svg viewBox="0 0 64 64" width="42" height="42" aria-hidden="true">
+      <circle cx="32" cy="32" r="30" fill="#fff"/><circle cx="32" cy="32" r="26" fill="#003a7c"/>
+      <path d="M6 28h52v8H6z" fill="#d61f3d"/><circle cx="32" cy="32" r="9" fill="#fff"/>
+      <path d="m32 26 5 3.600-1.900 5.800h-6.200L27 29.600z" fill="#003a7c"/>
+      <path d="m32 4 2 4h-4z" fill="#d4a853"/>
     </svg>
-    <span>HAITI<b>UNITED</b></span>
+    <span>HAITI<b>UNITED</b><i>FC</i></span>
   </a>
   <nav class="nav__links" aria-label="Primary">
-    <a href="#match" data-cursor="Live">Matches</a>
-    <a href="#story">The Club</a>
-    <a href="#squad">Squad</a>
+    <a href="#story">HUFC</a>
+    <a href="#squad">Players</a>
+    <a href="#match">Table</a>
+    <a href="#match" data-cursor="Live">Schedule</a>
+    <a href="#shop">Shop</a>
     <a href="#news">News</a>
-    <a href="#join">Tickets</a>
+    <a href="#contact">Contact</a>
   </nav>
-  <a href="#join" class="btn btn--red magnetic nav__cta"><span>Get Tickets</span></a>
+  <a href="#tickets" class="btn btn--red magnetic nav__cta"><span>Tickets</span></a>
   <button class="burger" id="burger" aria-label="Open menu" aria-expanded="false"><i></i><i></i></button>
 </header>
 
 <div class="menu" id="menu" aria-hidden="true">
-  <a href="#match"><em>01</em>Matches</a>
-  <a href="#story"><em>02</em>The Club</a>
-  <a href="#squad"><em>03</em>Squad</a>
-  <a href="#news"><em>04</em>News</a>
-  <a href="#join"><em>05</em>Tickets</a>
+  <a href="#story"><em>01</em>HUFC</a>
+  <a href="#squad"><em>02</em>Players</a>
+  <a href="#match"><em>03</em>Schedule</a>
+  <a href="#shop"><em>04</em>Shop</a>
+  <a href="#news"><em>05</em>News</a>
+  <a href="#contact"><em>06</em>Contact</a>
 </div>
 
 <main id="top">
@@ -52,6 +55,7 @@
   <div class="hero__bg">
     <div class="hero__blob hero__blob--blue"></div>
     <div class="hero__blob hero__blob--red"></div>
+    <div class="hero__blob hero__blob--violet"></div>
     <div class="hero__spot" id="spot"></div>
     <div class="hero__lines"></div>
   </div>
@@ -70,15 +74,15 @@
   </div>
 
   <div class="hero__inner">
-    <p class="eyebrow reveal-line"><span class="dot"></span> Season 2026/27 · Matchday Live</p>
-    <h1 class="hero__title" id="heroTitle" aria-label="Haiti United">
+    <p class="eyebrow reveal-line"><span class="dot"></span> New York · Division I Northeast American (North)</p>
+    <h1 class="hero__title" id="heroTitle" aria-label="Haiti United FC">
       <span class="row" data-split>HAITI</span>
       <span class="row row--outline" data-split>UNITED</span>
     </h1>
-    <p class="hero__sub reveal-line">Ansanm nou pi fò. <span>Together we are stronger.</span></p>
+    <p class="hero__sub reveal-line">A professional soccer club in New York. <span>Building community, honoring Haitian culture and uniting families through the love of football.</span></p>
     <div class="hero__ctas reveal-line">
-      <a href="#join" class="btn btn--red magnetic" data-cursor="Go"><span>Get Tickets</span></a>
-      <a href="#match" class="btn btn--ghost magnetic"><span>Match Centre</span></a>
+      <a href="#tickets" class="btn btn--red magnetic" data-cursor="Go"><span>Get Tickets</span></a>
+      <a href="#shop" class="btn btn--ghost magnetic"><span>Shop the Kit</span></a>
     </div>
   </div>
 
@@ -112,7 +116,7 @@
   <div class="wrap">
     <div class="sec-head">
       <p class="eyebrow"><span class="dot"></span> Match Centre</p>
-      <h2 class="big" data-split-words>Every minute. <br>Every goal.</h2>
+      <h2 class="big" data-split-words>Schedule, <br>results &amp; table</h2>
     </div>
 
     <div class="match__grid">
@@ -127,7 +131,7 @@
       </div>
 
       <div class="panel panel--table">
-        <div class="panel__top"><h3>League Table</h3><span class="pill">Top 6</span></div>
+        <div class="panel__top"><h3>League Table</h3><span class="pill">Spring 2026</span></div>
         <table class="table" id="table">
           <thead><tr><th>#</th><th>Club</th><th>P</th><th>GD</th><th>Pts</th></tr></thead>
           <tbody></tbody>
@@ -153,21 +157,21 @@
     </div>
     <div class="story__text">
       <p class="eyebrow"><span class="dot"></span> The Club</p>
-      <div class="chapter is-on" data-num="1" data-label="Roots">
-        <h2>Born from the <span class="hl">diaspora.</span></h2>
-        <p>Haiti United started with a ball, a patch of grass and a community that refused to be divided by distance. Replace this with the real founding story.</p>
+      <div class="chapter is-on" data-num="1" data-label="Club">
+        <h2>A pro club in <span class="hl">New York.</span></h2>
+        <p>Haiti United FC is a professional soccer club in the heart of Brooklyn, where rhythm, resilience and culture meet the beautiful game.</p>
       </div>
-      <div class="chapter" data-num="2" data-label="Identity">
-        <h2>Blue. Red. <span class="hl">One heartbeat.</span></h2>
-        <p>The colors of the flag, the rhythm of rara, the pride of kreyòl — everything we wear on the pitch says where we come from.</p>
+      <div class="chapter" data-num="2" data-label="Culture">
+        <h2>Honoring <span class="hl">Haitian culture.</span></h2>
+        <p>Football as a bridge of culture and community — where Brooklyn’s languages, stories and cultures collide.</p>
       </div>
-      <div class="chapter" data-num="3" data-label="Rise">
-        <h2>From local pitch to <span class="hl">big stage.</span></h2>
-        <p>Every season we climb. Add your honors, league history and milestones here — this chapter is built to be edited.</p>
+      <div class="chapter" data-num="3" data-label="Family">
+        <h2>Uniting <span class="hl">families.</span></h2>
+        <p>On matchdays and beyond, the club brings neighborhoods and generations together through the love of football.</p>
       </div>
       <div class="chapter" data-num="4" data-label="Future">
-        <h2>The next generation <span class="hl">starts here.</span></h2>
-        <p>Youth academy, community programs and a pathway for the next wave of Haitian talent. Join us.</p>
+        <h2>The next level <span class="hl">starts here.</span></h2>
+        <p>College and recruiting support, rising stars and a pathway for NYC athletes to reach what’s next.</p>
       </div>
     </div>
   </div>
@@ -176,10 +180,10 @@
 <!-- ============ STATS ============ -->
 <section class="stats">
   <div class="wrap stats__grid">
-    <div class="stat"><b data-count="38">0</b><span>Goals this season</span></div>
-    <div class="stat"><b data-count="12">0</b><span>Wins</span></div>
-    <div class="stat"><b data-count="71" data-suffix="%">0</b><span>Possession avg.</span></div>
-    <div class="stat"><b data-count="5200">0</b><span>Supporters</span></div>
+    <div class="stat"><b data-count="10">0</b><span>Matches played</span></div>
+    <div class="stat"><b data-count="9">0</b><span>Clubs in the division</span></div>
+    <div class="stat"><b data-count="5">0</b><span>Goals in our last win</span></div>
+    <div class="stat"><b data-count="1">0</b><span>Community, one family</span></div>
   </div>
 </section>
 
@@ -187,12 +191,12 @@
 <section class="mask" id="mask">
   <div class="mask__stage">
     <div class="mask__under">
-      <h2>ANSANM<br>NOU PI FÒ</h2>
+      <h2>HAITI<br>UNITED FC</h2>
     </div>
     <div class="mask__over" id="maskOver">
       <div class="mask__inner">
-        <p class="eyebrow"><span class="dot"></span> Our Motto</p>
-        <h2>TOGETHER<br>WE ARE<br>STRONGER</h2>
+        <p class="eyebrow"><span class="dot"></span> Our Mission</p>
+        <h2>UNITING<br>FAMILIES<br>THROUGH<br>FOOTBALL</h2>
       </div>
     </div>
   </div>
@@ -216,9 +220,9 @@
 <section class="section scorers">
   <div class="wrap scorers__grid">
     <div>
-      <p class="eyebrow"><span class="dot"></span> Season Leaders</p>
-      <h2 class="big" data-split-words>Golden <br>Boot race</h2>
-      <p class="lead">Live stat bars fill as you scroll. Hook these to your real stats feed later.</p>
+      <p class="eyebrow"><span class="dot"></span> Season Leaders · sample data</p>
+      <h2 class="big" data-split-words>Top <br>scorers</h2>
+      <p class="lead">Stat bars fill as you scroll. Placeholder numbers — connect them to the real stats feed.</p>
     </div>
     <div class="bars" id="bars"></div>
   </div>
@@ -238,32 +242,25 @@
   </div>
 </section>
 
-<!-- ============ JOIN / TICKETS ============ -->
-<section class="section join" id="join">
+<!-- ============ TICKETS BANNER ============ -->
+<section class="tickets" id="tickets">
+  <div class="tickets__bg"></div>
+  <div class="wrap tickets__in">
+    <p class="eyebrow"><span class="dot"></span> Matchday</p>
+    <h2 class="big" data-split-words>Be part of <br>football history</h2>
+    <p class="lead">Tickets for key matches are now on sale.</p>
+    <a href="#" class="btn btn--red magnetic" data-cursor="Go"><span>Get Tickets</span></a>
+  </div>
+</section>
+
+<!-- ============ SHOP ============ -->
+<section class="section join" id="shop">
   <div class="wrap">
     <div class="sec-head">
-      <p class="eyebrow"><span class="dot"></span> Be part of it</p>
-      <h2 class="big" data-split-words>Tickets &amp; <br>Membership</h2>
+      <p class="eyebrow"><span class="dot"></span> Online Store</p>
+      <h2 class="big" data-split-words>Support your <br>team. Wear it.</h2>
     </div>
-    <div class="tiers">
-      <article class="tier tilt">
-        <h3>Matchday</h3><p class="price">$15<small>/game</small></p>
-        <ul><li>Single match entry</li><li>Digital ticket</li><li>Fan zone access</li></ul>
-        <button class="btn btn--ghost cart magnetic"><span class="cart__t">Add to Cart</span><svg class="cart__ck" viewBox="0 0 24 24"><path d="M5 12.500 10 17.500 19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      </article>
-      <article class="tier tier--hot tilt">
-        <span class="ribbon">Most Popular</span>
-        <h3>Season Pass</h3><p class="price">$120<small>/season</small></p>
-        <ul><li>All home matches</li><li>Priority entry</li><li>Member scarf</li><li>10% off the shop</li></ul>
-        <button class="btn btn--red cart magnetic"><span class="cart__t">Add to Cart</span><svg class="cart__ck" viewBox="0 0 24 24"><path d="M5 12.500 10 17.500 19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      </article>
-      <article class="tier tilt">
-        <h3>Supporter</h3><p class="price">$40<small>/year</small></p>
-        <ul><li>Digital membership</li><li>Member-only news</li><li>Vote in fan polls</li></ul>
-        <button class="btn btn--ghost cart magnetic"><span class="cart__t">Add to Cart</span><svg class="cart__ck" viewBox="0 0 24 24"><path d="M5 12.500 10 17.500 19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
-      </article>
-    </div>
-
+    <div class="tiers" id="shopGrid"></div>
     <div class="poll" id="poll">
       <h3>Fan vote · Man of the Match</h3>
       <div class="poll__opts" id="pollOpts"></div>
@@ -273,28 +270,28 @@
 
 <!-- ============ SPONSORS ============ -->
 <section class="sponsors" aria-label="Partners">
-  <p class="eyebrow center">Proud Partners</p>
+  <p class="eyebrow center">Partners &amp; Sponsors</p>
   <div class="ticker__track ticker__track--slow" id="ticker2"></div>
 </section>
 
 </main>
 
 <!-- ============ FOOTER ============ -->
-<footer class="footer">
+<footer class="footer" id="contact">
   <div class="footer__giant" aria-hidden="true">HAITI UNITED</div>
   <div class="wrap footer__grid">
     <div>
-      <h4>Stay in the game</h4>
+      <h4>Stay connected to the game we love</h4>
       <form class="news-form" onsubmit="return false">
         <input type="email" placeholder="Your email" aria-label="Email">
         <button class="btn btn--red magnetic"><span>Join</span></button>
       </form>
     </div>
-    <div><h4>Club</h4><a href="#story">About</a><a href="#squad">Squad</a><a href="#news">News</a></div>
-    <div><h4>Fans</h4><a href="#join">Tickets</a><a href="#join">Membership</a><a href="#">Shop</a></div>
-    <div><h4>Follow</h4><a href="#">Instagram</a><a href="#">Facebook</a><a href="#">YouTube</a><a href="#">TikTok</a></div>
+    <div><h4>HUFC</h4><a href="#squad">Players</a><a href="#match">League Table</a><a href="#match">Schedule</a><a href="#news">News</a></div>
+    <div><h4>Contact</h4><address>626 RexCorp Plaza, 6th floor, West Tower<br>Uniondale, NY 11556<br>(201) 616-0509<br><a href="mailto:info@haitiunitedfc.co">info@haitiunitedfc.co</a></address></div>
+    <div><h4>Follow</h4><a href="#">Facebook</a><a href="#">Instagram</a><a href="#">TikTok</a></div>
   </div>
-  <p class="footer__legal">© 2026 Haiti United FC · Ansanm nou pi fò</p>
+  <p class="footer__legal">Copyright 2026 — Haiti United FC, All Right Reserved</p>
 </footer>
 
 <script src="vendor/gsap.min.js"></script>

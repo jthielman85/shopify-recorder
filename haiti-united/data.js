@@ -1,55 +1,67 @@
 /* ------------------------------------------------------------------
    Haiti United FC — editable content.
-   EVERYTHING below is PLACEHOLDER data. Swap in real fixtures,
-   players, scores and stories; the page rebuilds itself from this.
+   Results, league table, news headlines, shop items, contact and
+   sponsors come from haitiunitedfc.co. Items marked SAMPLE are
+   placeholders: upcoming fixtures, roster (except Tingly Chery),
+   scorers and the poll. Swap in real data; the page rebuilds itself.
 ------------------------------------------------------------------- */
 window.HU = {
-  // ISO dates in the future drive the live countdown (first upcoming one wins)
+  // SAMPLE fixtures (future ISO dates drive the live countdown)
   fixtures: [
-    { date: '2026-11-08T15:00:00-05:00', opp: 'Miami Rovers',     code: 'MIA', comp: 'League',   venue: 'Home · Heritage Park', home: true },
-    { date: '2026-11-22T18:30:00-05:00', opp: 'Brooklyn Kings',   code: 'BKN', comp: 'League',   venue: 'Away · Kings Field',   home: false },
-    { date: '2026-12-06T14:00:00-05:00', opp: 'Montréal Étoile',  code: 'MTL', comp: 'Cup',      venue: 'Home · Heritage Park', home: true },
-    { date: '2026-12-20T16:00:00-05:00', opp: 'Orlando Pelicans', code: 'ORL', comp: 'League',   venue: 'Away · Pelican Ground', home: false }
+    { date: '2026-11-08T12:00:00-05:00', opp: 'NY Renegades FC',  code: 'NYR', comp: 'Division I', venue: 'Home · Linden Park',    home: true },
+    { date: '2026-11-22T12:00:00-05:00', opp: 'NY Braveheart SC', code: 'NYB', comp: 'Division I', venue: 'Away',                  home: false },
+    { date: '2026-12-06T12:00:00-05:00', opp: "Osner's FC",       code: 'OSN', comp: 'Division I', venue: 'Home · Linden Park',    home: true },
+    { date: '2026-12-20T12:00:00-05:00', opp: 'NY Empire FC',     code: 'NYE', comp: 'Division I', venue: 'Away',                  home: false }
   ],
+  // REAL results from the site (Division I Northeast American (North))
   results: [
-    { date: 'Oct 11', opp: 'Boston Harbor',  code: 'BOS', us: 3, them: 1, comp: 'League', home: true },
-    { date: 'Oct 04', opp: 'Atlanta Union',  code: 'ATL', us: 2, them: 2, comp: 'League', home: false },
-    { date: 'Sep 27', opp: 'Newark Eagles',  code: 'NWK', us: 1, them: 0, comp: 'Cup',    home: true },
-    { date: 'Sep 20', opp: 'Chicago Lakes',  code: 'CHI', us: 0, them: 1, comp: 'League', home: false },
-    { date: 'Sep 13', opp: 'Queens FC',      code: 'QNS', us: 4, them: 0, comp: 'League', home: true }
+    { date: 'Oct 26', opp: 'Long Island Premier', code: 'LIP', us: 5, them: 0, comp: 'Division I', home: false, venue: 'Our Lady of Grace Fields' },
+    { date: 'Oct 18', opp: 'Atlas FC NYC',        code: 'ATL', us: 5, them: 1, comp: 'Division I', home: true,  venue: 'Linden Park' }
   ],
+  // REAL Spring 2026 table from the site
   table: [
-    { club: 'Haiti United',   p: 9, gd: '+12', pts: 22, us: true },
-    { club: 'Miami Rovers',   p: 9, gd: '+9',  pts: 20 },
-    { club: 'Brooklyn Kings', p: 9, gd: '+5',  pts: 17 },
-    { club: 'Boston Harbor',  p: 9, gd: '+1',  pts: 14 },
-    { club: 'Atlanta Union',  p: 9, gd: '-2',  pts: 11 },
-    { club: 'Newark Eagles',  p: 9, gd: '-4',  pts: 10 }
+    { club: 'NY Renegades FC',  p: 10, gd: '+5', pts: 12 },
+    { club: 'NY Braveheart SC', p: 10, gd: '+2', pts: 12 },
+    { club: "Osner's FC",       p: 10, gd: '+2', pts: 12 },
+    { club: 'NY Empire FC',     p: 10, gd: '+1', pts: 12 },
+    { club: 'Red Hook FC',      p: 10, gd: '0',  pts: 10 },
+    { club: 'Kelmendi FC NY',   p: 10, gd: '-1', pts: 9 },
+    { club: 'AFC Academy',      p: 10, gd: '-2', pts: 9 },
+    { club: 'Brooklyn FC U20',  p: 10, gd: '-2', pts: 9 },
+    { club: 'Haiti United FC',  p: 10, gd: '-5', pts: 9, us: true }
   ],
+  // Tingly Chery is real (Forward); the rest are SAMPLE slots
   squad: [
-    { no: 1,  name: 'Jean-Marc Étienne',  pos: 'GK',  tag: 'Goalkeeper' },
-    { no: 4,  name: 'Wilfried Joseph',    pos: 'DEF', tag: 'Centre-back' },
-    { no: 5,  name: 'Samuel Pierre',      pos: 'DEF', tag: 'Captain' },
-    { no: 8,  name: 'Kervens Baptiste',   pos: 'MID', tag: 'Midfielder' },
-    { no: 10, name: 'Ricardo Louis',      pos: 'MID', tag: 'Playmaker' },
-    { no: 7,  name: 'Dwayne Charles',     pos: 'FWD', tag: 'Winger' },
-    { no: 9,  name: 'Mackenson Desir',    pos: 'FWD', tag: 'Striker' },
-    { no: 11, name: 'Fabrice Toussaint',  pos: 'FWD', tag: 'Forward' }
+    { no: 9,  name: 'Tingly Chery', pos: 'FWD', tag: 'Forward' },
+    { no: 1,  name: 'Player Name',  pos: 'GK',  tag: 'Goalkeeper' },
+    { no: 4,  name: 'Player Name',  pos: 'DEF', tag: 'Defender' },
+    { no: 5,  name: 'Player Name',  pos: 'DEF', tag: 'Defender' },
+    { no: 8,  name: 'Player Name',  pos: 'MID', tag: 'Midfielder' },
+    { no: 10, name: 'Player Name',  pos: 'MID', tag: 'Midfielder' },
+    { no: 7,  name: 'Player Name',  pos: 'FWD', tag: 'Winger' },
+    { no: 11, name: 'Player Name',  pos: 'FWD', tag: 'Forward' }
   ],
   scorers: [
-    { name: 'Mackenson Desir',   goals: 11 },
-    { name: 'Ricardo Louis',     goals: 8 },
-    { name: 'Dwayne Charles',    goals: 6 },
-    { name: 'Fabrice Toussaint', goals: 5 },
-    { name: 'Kervens Baptiste',  goals: 3 }
+    { name: 'Tingly Chery', goals: 6 },
+    { name: 'Player Name',  goals: 4 },
+    { name: 'Player Name',  goals: 3 },
+    { name: 'Player Name',  goals: 2 },
+    { name: 'Player Name',  goals: 1 }
   ],
+  // REAL headlines from the site
   news: [
-    { tag: 'Match Report', title: 'Desir hat-trick sinks Boston as United go top', date: 'Oct 12', hue: 'b' },
-    { tag: 'Club',         title: 'Youth academy opens summer trials for under-16s', date: 'Oct 09', hue: 'r' },
-    { tag: 'Community',    title: 'Heritage Day returns: music, food and a fan match', date: 'Oct 06', hue: 'w' },
-    { tag: 'Tickets',      title: 'Season passes for the second half now on sale', date: 'Oct 01', hue: 'b' }
+    { tag: 'Club',      title: 'More than a club: how Haiti United FC is leading a football movement in NYC', date: 'Mar 20', hue: 'b' },
+    { tag: 'Community', title: 'Cultural unity through football: Haiti United FC in the community',         date: 'Mar 13', hue: 'r' },
+    { tag: 'Recruiting',title: 'College & recruiting support: helping NYC athletes reach the next level',   date: 'Mar 6',  hue: 'w' },
+    { tag: 'Club',      title: 'Rising stars at Haiti United FC',                                           date: 'Feb 27', hue: 'b' }
   ],
-  poll: ['Mackenson Desir', 'Ricardo Louis', 'Samuel Pierre'],
-  ticker: ['FT  Haiti United 3–1 Boston Harbor', 'Top of the league after 9 games', 'Season passes now on sale', 'Youth trials open', 'Ansanm nou pi fò'],
-  sponsors: ['PARTNER ONE', 'KAY DISTRIBUTION', 'AYITI MEDIA', 'CARIBE TRAVEL', 'PEARL BANK', 'SOLEY ENERGY']
+  // REAL shop items ($44.99 each)
+  shop: [
+    { name: 'HUFC Red Jersey',   cat: 'T-Shirts', price: '$44.99', body: '#d61f3d', trim: '#003a7c', accent: '#d4a853' },
+    { name: 'HUFC Blue Jersey',  cat: 'T-Shirts', price: '$44.99', body: '#2f6bff', trim: '#ffffff', accent: '#d4a853', hot: true },
+    { name: 'HUFC White Jersey', cat: 'T-Shirts', price: '$44.99', body: '#f4f6ff', trim: '#003a7c', accent: '#003a7c' }
+  ],
+  poll: ['Tingly Chery', 'Player Name', 'Player Name'],
+  ticker: ['FT  Haiti United FC 5–0 Long Island Premier', 'FT  Haiti United FC 5–1 Atlas FC NYC', 'Tickets for key matches now on sale', 'Honoring Haitian culture', 'Uniting families through football'],
+  sponsors: ['CHOKARELLA', 'BARBANCOURT RHUM', 'SPORTS ATHLETES ALLIANCE', 'EKIP', 'REBEL', 'PRESTIGE']
 };

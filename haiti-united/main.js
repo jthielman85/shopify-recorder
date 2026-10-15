@@ -23,7 +23,7 @@
           <span class="t">${f.comp}</span></li>`; }).join('')
       : D.results.map(r => { const c = r.us > r.them ? 'w' : r.us < r.them ? 'l' : 'd2';
           return `<li><div class="d">${r.date.split(' ')[0]}<b>${r.date.split(' ')[1]}</b></div>
-          <div class="o">${r.home ? 'vs' : '@'} ${r.opp}<small>${r.comp}</small></div>
+          <div class="o">${r.home ? 'vs' : '@'} ${r.opp}<small>${r.comp} · ${r.venue}</small></div>
           <span class="s ${c}">${r.us}–${r.them}</span></li>`; }).join('');
     gsap.fromTo(fixList.children, { y: 24, opacity: 0 }, { y: 0, opacity: 1, stagger: .07, duration: .6, ease: 'power3.out' });
   };
@@ -54,6 +54,14 @@
   const tk = (el, items) => { const h = items.map(i => `<span>${i}</span>`).join(''); el.innerHTML = h + h + h + h; };
   tk($('#ticker1'), D.ticker); tk($('#ticker2'), D.sponsors);
   // marquee loops by -50% so the repeated set must be an even number of copies (4 above)
+
+
+  const jersey = j => `<svg class="jersey" viewBox="0 0 200 190" aria-hidden="true"><path d="M70 10 100 24 130 10 176 34 190 78 160 90 152 70V180H48V70L40 90 10 78 24 34z" fill="${j.body}"/>
+    <path d="M70 10 100 24 130 10l-8 -4q-22 20 -44 0z" fill="${j.trim}"/><path d="M10 78 24 34l16 8 -8 40z M190 78 176 34l-16 8 8 40z" fill="${j.trim}" opacity=".9"/>
+    <text x="100" y="98" text-anchor="middle" font-family="Barlow Condensed,Impact" font-weight="800" font-size="30" font-style="italic" fill="${j.accent}">HAITI</text>
+    <rect x="76" y="104" width="48" height="6" rx="2" fill="${j.trim}"/><circle cx="127" cy="46" r="7" fill="${j.trim}" stroke="${j.accent}" stroke-width="2"/></svg>`;
+  $('#shopGrid').innerHTML = D.shop.map(j => `<article class="tier tilt${j.hot ? ' tier--hot' : ''}">${jersey(j)}<span class="cat">${j.cat}</span><h3>${j.name}</h3>
+    <p class="price">${j.price}</p><button class="btn ${j.hot ? 'btn--red' : 'btn--ghost'} cart magnetic"><span class="cart__t">Add to Cart</span><svg class="cart__ck" viewBox="0 0 24 24"><path d="M5 12.500 10 17.500 19 7" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></button></article>`).join('');
 
   /* ---------- poll ---------- */
   const poll = $('#poll'), votes = [41, 33, 26];
